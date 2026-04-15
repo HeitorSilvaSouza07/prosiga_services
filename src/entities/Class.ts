@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, Collection } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Collection, OneToMany } from "typeorm";
+import { Activitie } from "./Activitie";
 
 @Entity('tblClass')
 export class Class{
@@ -11,5 +12,7 @@ export class Class{
     @Column({type: 'varchar'})
     ClassCurso: string;
     
+    @OneToMany (() => Activitie, (activitie) => activitie.classe)
+    activities: Activitie[];
 
 }

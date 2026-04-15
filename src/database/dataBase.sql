@@ -23,3 +23,6 @@ IdClass int identity(1, 1) primary key,
 ClassPeriod int not null,
 ClassCurso varchar(50) not null
 )
+
+alter table tblActivities
+add CreatedAt datetime default getdate() not null 

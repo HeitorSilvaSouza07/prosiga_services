@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
 import { User } from '../entities/User'
-import { Activities } from '../entities/Activities'
+import { Activitie } from '../entities/Activitie'
 import { Class } from '../entities/Class'
 
 export const Connection = new DataSource({
@@ -14,7 +14,7 @@ export const Connection = new DataSource({
         encrypt: false,
         trustServerCertificate: true
     },
-    entities: [User, Activities, Class],
+    entities: [User, Activitie, Class],
     synchronize: true,
 }) 
 
