@@ -1,6 +1,9 @@
 import e, { Request, Response } from "express";
 import { Connection } from "../database/database";
 import { Activitie } from "../entities/Activitie";
+import { actionAsyncStorage } from "next/dist/server/app-render/action-async-storage.external";
+import { User } from "../entities/User";
+import { Class } from "../entities/Class";
 
 export class ActivitieController{
 
@@ -12,7 +15,7 @@ export class ActivitieController{
             const activitie = await repo.findOneBy({IdActivities: id})
 
             if(!activitie){
-                return res.status(400).json({
+                return res.status(404).json({
                     status: false,
                     msg: 'usuario não entrado'
                 })
@@ -39,9 +42,9 @@ export class ActivitieController{
             const activitie = await repo.find()
 
             if(!activitie){
-                return res.status(400).json({
+                return res.status(404).json({
                     status: false,
-                    msg: 'usuarios não entrado'
+                    msg: 'Sem atividades listadas '
                 })
             }
             
@@ -62,7 +65,66 @@ export class ActivitieController{
 
     public static async create(req: Request, res: Response){
         try{
-            
+            const repo = Connection.getRepository(Activitie)
+            const {IdUser, IdClass, ActivitieType,
+                 ActivitieDescription, ActivitieDataEnd} 
+                 = req.body 
+
+            if(!IdUser || !IdClass || !ActivitieType ||
+                 !ActivitieDescription || !ActivitieDataEnd){
+                    return res.status(400).json({
+                        status: false,
+                        msg: 'Preencha todos os campos'
+                    })
+                 }
+
+            const description = ActivitieDescription.trim()
+            if(description.length > 1500){
+                return res.status(400).json({
+                    status: false,
+                    msg: 'A descrição não pode ter mais de 1500 caracteres'
+                })
+            }
+
+            const repoUser =  Connection.getRepository(User)
+            const user = repoUser.findOneBy({IdUser: IdUser})
+
+            if(!user){
+                return res.status(404).json({
+                    status: false,
+                    msg: 'usuario não encontrado'
+                })
+            }
+
+            const repoClass = Connection.getRepository(Class)
+            const classe =  repoClass.findOneBy({IdClass: IdClass})
+
+            if(!classe){
+                return res.status(404).json({
+                    status: false,
+                    msg: 'classe não encontrada'
+                })
+            }
+
+            const activitie = repo.create({
+                IdUser: Number(IdUser),
+                IdClass: Number(IdClass),
+                ActivitieType: String(ActivitieType),
+                ActivitieDescription: String(ActivitieDescription),
+                ActivitieDataEnd: Date(ActivitieDataEnd),
+                ActivitieDataCreate: Date(ActivitieDataCreate),
+                CreatedAt: Date(CreatedAt)
+            })
+
+            await repo.save(activitie)
+
+            return res.status(201).json({
+                status: true,
+                msg: 'atividade criada com sucesso',
+                data: activitie
+            })
+
+
         }catch(error){
             console.log(error)
             return res.status(500).json({
