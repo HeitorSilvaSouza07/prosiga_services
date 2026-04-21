@@ -5,16 +5,16 @@ import { actionAsyncStorage } from "next/dist/server/app-render/action-async-sto
 import { User } from "../entities/User";
 import { Class } from "../entities/Class";
 
-export class ActivitieController{
+export class ActivitieController {
 
-    public static async get(req: Request, res: Response){
-        try{
+    public static async get(req: Request, res: Response) {
+        try {
             const id = Number(req.params.id)
 
             const repo = Connection.getRepository(Activitie)
-            const activitie = await repo.findOneBy({IdActivities: id})
+            const activitie = await repo.findOneBy({ IdActivities: id })
 
-            if(!activitie){
+            if (!activitie) {
                 return res.status(404).json({
                     status: false,
                     msg: 'usuario não entrado'
@@ -23,11 +23,11 @@ export class ActivitieController{
 
             return res.status(200).json({
                 status: true,
-                msg:'usuario encontrado com sucesso',
+                msg: 'usuario encontrado com sucesso',
                 data: activitie
             })
 
-        }catch(error){
+        } catch (error) {
             console.error(error)
             return res.status(500).json({
                 status: false,
@@ -36,25 +36,25 @@ export class ActivitieController{
         }
     }
 
-    public static async listActivities(req: Request, res: Response){
-        try{
+    public static async listActivities(req: Request, res: Response) {
+        try {
             const repo = Connection.getRepository(Activitie)
             const activitie = await repo.find()
 
-            if(!activitie){
+            if (!activitie) {
                 return res.status(404).json({
                     status: false,
                     msg: 'Sem atividades listadas '
                 })
             }
-            
+
             return res.status(200).json({
                 status: true,
                 msg: 'usuario encontrado com sucesso',
                 data: activitie
             })
-    
-        }catch(error){
+
+        } catch (error) {
             console.log(error)
             return res.status(500).json({
                 status: false,
@@ -63,33 +63,33 @@ export class ActivitieController{
         }
     }
 
-    public static async create(req: Request, res: Response){
-        try{
+    public static async create(req: Request, res: Response) {
+        try {
             const repo = Connection.getRepository(Activitie)
-            const {IdUser, IdClass, ActivitieType,
-                 ActivitieDescription, ActivitieDataEnd} 
-                 = req.body 
+            const { IdUser, IdClass, ActivitieType,
+                ActivitieDescription, ActivitieDataEnd, ActivitieTitle }
+                = req.body
 
-            if(!IdUser || !IdClass || !ActivitieType ||
-                 !ActivitieDescription || !ActivitieDataEnd){
-                    return res.status(400).json({
-                        status: false,
-                        msg: 'Preencha todos os campos'
-                    })
-                 }
+            if (!IdUser || !IdClass || !ActivitieType ||
+                !ActivitieDescription || !ActivitieDataEnd || !ActivitieTitle) {
+                return res.status(400).json({
+                    status: false,
+                    msg: 'Preencha todos os campos'
+                })
+            }
 
             const description = ActivitieDescription.trim()
-            if(description.length > 1500){
+            if (description.length > 1500) {
                 return res.status(400).json({
                     status: false,
                     msg: 'A descrição não pode ter mais de 1500 caracteres'
                 })
             }
 
-            const repoUser =  Connection.getRepository(User)
-            const user = repoUser.findOneBy({IdUser: IdUser})
+            const repoUser = Connection.getRepository(User)
+            const user = await repoUser.findOneBy({ IdUser: IdUser })
 
-            if(!user){
+            if (!user) {
                 return res.status(404).json({
                     status: false,
                     msg: 'usuario não encontrado'
@@ -97,13 +97,25 @@ export class ActivitieController{
             }
 
             const repoClass = Connection.getRepository(Class)
-            const classe =  repoClass.findOneBy({IdClass: IdClass})
+            const classe = await repoClass.findOneBy({ IdClass: IdClass })
 
-            if(!classe){
+            if (!classe) {
                 return res.status(404).json({
                     status: false,
                     msg: 'classe não encontrada'
                 })
+            }
+
+            const title = ActivitieTitle.trim()
+            
+            if(ActivitieTitle == ''){
+                return res.status(400).json({status: false, msg: 'titulo vazio'})
+            }
+
+            const dataAtual = new Date()
+
+            if(ActivitieDataEnd < dataAtual){
+                return res.status(400).json({status: false, msg: 'data final menor que a data atual'})
             }
 
             const activitie = repo.create({
@@ -111,9 +123,10 @@ export class ActivitieController{
                 IdClass: Number(IdClass),
                 ActivitieType: String(ActivitieType),
                 ActivitieDescription: String(ActivitieDescription),
-                ActivitieDataEnd: Date(ActivitieDataEnd),
-                ActivitieDataCreate: Date(ActivitieDataCreate),
-                CreatedAt: Date(CreatedAt)
+                ActivitieDataEnd: ActivitieDataEnd,
+                ActivitieTitle: String(ActivitieTitle),
+                ActivitieDataCreate: dataAtual,
+                CreatedAt: dataAtual
             })
 
             await repo.save(activitie)
@@ -125,55 +138,55 @@ export class ActivitieController{
             })
 
 
-        }catch(error){
+        } catch (error) {
             console.log(error)
             return res.status(500).json({
-                status: false, 
+                status: false,
                 msg: "Erro na conexão com o banco de dados"
             })
         }
     }
 
-    public static async update(req: Request, res: Response){
-        try{
+    public static async update(req: Request, res: Response) {
+        try {
 
-        }catch(error){
+        } catch (error) {
             console.error(error)
             return res.status(500).json({
-                status: false, 
+                status: false,
                 msg: 'Erro na conexão com o banco de dados'
             })
         }
     }
 
-    public static async delete(req: Request, res: Response){
-            try{
-                const id = Number(req.params.id)
+    public static async delete(req: Request, res: Response) {
+        try {
+            const id = Number(req.params.id)
 
-                const repo = Connection.getRepository(Activitie)
-                const activitie = await repo.findOneBy({IdActivities: id})
+            const repo = Connection.getRepository(Activitie)
+            const activitie = await repo.findOneBy({ IdActivities: id })
 
-                if(!activitie){
-                    return res.status(500).json({
-                        status: false,
-                        msg: 'Usuario não existe'
-                    })
+            if (!activitie) {
+                return res.status(500).json({
+                    status: false,
+                    msg: 'Usuario não existe'
+                })
 
-                await repo.delete({IdActivities: id})
+                await repo.delete({ IdActivities: id })
 
                 return res.status(200).json({
                     status: true,
                     msg: 'usuario deletado com sucesso'
                 })
 
-                }
-
-            }catch(error){
-                console.log(error)
-                return res.status(500).json({
-                    status: false,
-                    msg: 'erro na conexão como banco de dados'
-                })
             }
+
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({
+                status: false,
+                msg: 'erro na conexão como banco de dados'
+            })
         }
+    }
 }

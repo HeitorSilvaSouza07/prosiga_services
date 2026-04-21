@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, Collection, ManyToOne } from "typeorm";
 import { User } from "./User";
 import { Class  } from "./Class";
+import { VarChar } from "mssql";
 
 @Entity('tblActivities')
 export class Activitie{
@@ -16,11 +17,14 @@ export class Activitie{
     @Column({type: 'string', nullable: false})
     ActivitieType: string;
 
+    @Column({type: 'string', nullable: false})
+    ActivitieTitle: string;
+
     @Column({type: 'string'})
     ActivitieDescription: string;
 
     @Column({type: 'date', nullable: false})
-    AtivitieDataEnd: Date;
+    ActivitieDataEnd: Date;
 
     @Column({type: 'date', nullable: false})
     ActivitieDataCreate: Date;
