@@ -175,20 +175,19 @@ export class ActivitieController {
             const repo = Connection.getRepository(Activitie)
             const activitie = await repo.findOneBy({ IdActivities: id })
 
-            if (!activitie) {
-                return res.status(500).json({
+            if(!activitie){
+                return res.status(404).json({
                     status: false,
-                    msg: 'Usuario não existe'
-                })
+                    msg: 'atividade não encontrada'
+                })            
+            }  
 
-                await repo.delete({ IdActivities: id })
+            await repo.delete({IdActivities: id})
 
-                return res.status(200).json({
-                    status: true,
-                    msg: 'usuario deletado com sucesso'
-                })
-
-            }
+            return res.status(200).json({
+                status: true,
+                msg: 'atividade deletada com sucesso'
+            })  
 
         } catch (error) {
             console.log(error)
