@@ -12,7 +12,7 @@ export class ClassControllers{
             const classe = repo.findOne({where: {IdClass: id}})
 
             if(!classe){
-                return res.status(400).json({
+                return res.status(404).json({
                     status: false,
                     msg: 'usuario não existe'
                 })
@@ -20,7 +20,7 @@ export class ClassControllers{
 
             return res.status(200).json({
                 status: true,
-                msg: 'Usuario encontrado com sucesso',
+                msg: 'A classe foi encontrada com sucesso',
                 data: classe
             })
         
@@ -42,6 +42,7 @@ export class ClassControllers{
                 status: true,
                 data: classes 
             })
+
         }catch(error: any){
             return res.status(500).json({
                 status: false,
@@ -56,7 +57,7 @@ export class ClassControllers{
             const {ClassPeriod, ClassCurso} = req.body
 
             if(!ClassCurso || !ClassPeriod){
-                return res.status(400).json({
+                return res.status(404).json({
                     status: false,
                     msg: 'Campos não preenchidos'
                 })
@@ -73,7 +74,7 @@ export class ClassControllers{
 
             return res.status(201).json({
                 status:true,
-                msg: 'Usuario criado com sucesso'
+                msg: 'A classe foi criada com sucesso'
             })
 
         }catch(error: any){
@@ -92,12 +93,12 @@ export class ClassControllers{
 
             const repo = await Connection.getRepository(Class)
         
-            const classExisting= repo.findOne({where: {IdClass: id}})
+            const classExisting= await repo.findOne({where: {IdClass: id}})
 
             if(!classExisting){
-                return res.status(400).json({
+                return res.status(404).json({
                     status: false ,
-                    msg: 'o usuario não existe'
+                    msg: 'a classe não existe'
                 })
             }
 
@@ -117,8 +118,8 @@ export class ClassControllers{
             await repo.save(classe)
 
             return res.status(201).json({
-                status: false,
-                msg: 'Usuario atualizado com sucesso'
+                status: true,
+                msg: 'A classe foi atualizada com sucesso'
             })
 
         }catch(error: any){
@@ -138,7 +139,7 @@ export class ClassControllers{
                 const classe = repo.findOne({where: {IdClass: IdClass}})
 
                 if(!classe){
-                    return res.status(400).json({
+                    return res.status(404).json({
                         status: false,
                         msg: 'A classe não foi encontrada'
                     })
@@ -147,8 +148,8 @@ export class ClassControllers{
                 await repo.delete({IdClass: IdClass})
 
                 return res.status(200).json({
-                    status: false,
-                    msg: 'usuario deletado com sucesso'
+                    status: true,
+                    msg: 'a classe foi deletada com sucesso'
                 })
 
         }catch(error: any){

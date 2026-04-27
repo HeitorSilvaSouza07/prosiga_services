@@ -66,8 +66,6 @@ export class ActivitieController {
             const { IdUser, IdClass, ActivitieType,
                 ActivitieDescription, ActivitieDataEnd, ActivitieTitle }
                 = req.body
-
-            //validaando se todos os campos foram preenchidos
             if (!IdUser || !IdClass || !ActivitieType ||
                 !ActivitieDescription || !ActivitieDataEnd || !ActivitieTitle) {
                 return res.status(400).json({
@@ -76,8 +74,6 @@ export class ActivitieController {
                 })
             }
 
-            //validaando se a descrição tem mais de 1500 caracteres
-            //e se tem pelo menos 10 caracteres
             const description = ActivitieDescription.trim()
             if (description.length > 1500 || description.length < 10) {
                 return res.status(400).json({
@@ -86,8 +82,6 @@ export class ActivitieController {
                 })
             }
 
-            //conexão como banco e validando se o usuario 
-            //de associado a criação da atividade já existe 
             const repoUser = Connection.getRepository(User)
             const user = await repoUser.findOneBy({ IdUser: IdUser })
 
@@ -98,7 +92,6 @@ export class ActivitieController {
                 })
             }
 
-            //verificar ase a classe existe para a criação da atv
             const repoClass = Connection.getRepository(Class)
             const classe = await repoClass.findOneBy({ IdClass: IdClass })
 
@@ -109,21 +102,24 @@ export class ActivitieController {
                 })
             }
 
-            //verifica se o titulo é vazio 
             const title = ActivitieTitle.trim()
             
             if(ActivitieTitle == ''){
-                return res.status(400).json({status: false, msg: 'titulo vazio'})
+                return res.status(404).json({
+                    status: false,
+                    msg: 'titulo vazio'
+                })
             }
 
-            //valida se a data final é maior que a data de criação 
             const dataAtual = new Date()
 
             if(ActivitieDataEnd < dataAtual){
-                return res.status(400).json({status: false, msg: 'data final menor que a data atual'})
+                return res.status(404).json({
+                    status: false,
+                    msg: 'data final menor que a data atual'
+                })
             }
 
-            //cria a instancia da atividade
             const activitie = repo.create({
                 IdUser: Number(IdUser),
                 IdClass: Number(IdClass),
@@ -135,7 +131,6 @@ export class ActivitieController {
                 CreatedAt: dataAtual
             })
 
-            //salva a instacia no banco de dados 
             await repo.save(activitie)
 
             return res.status(201).json({
@@ -143,7 +138,7 @@ export class ActivitieController {
                 msg: 'atividade criada com sucesso',
                 data: activitie
             })
-            //retorna erro caso retorme algum problema 
+             
         } catch (error) {
             return res.status(500).json({
                 status: false,
@@ -154,6 +149,22 @@ export class ActivitieController {
 
     public static async update(req: Request, res: Response) {
         try {
+            const id = Number(req.params.id);
+
+            const repo = Connection.getRepository(Activitie);
+            const activitie = await repo.findOneBy({ IdActivities: id })
+
+            if (!activitie) {
+                return res.status(404).json({
+                    status: false,
+                    msg: 'atividade não encontrada'
+                })
+            }
+
+            const { IdUser, IdClass, ActivitieType } = req.body 
+
+            
+            
 
         } catch (error) {
             return res.status(500).json({

@@ -12,7 +12,7 @@ export class UserControllers{
             const user = await repo.findOneBy({IdUser: id});
 
             if(!user){
-                return res.status(400).json({
+                return res.status(404).json({
                     status: FileSystemWritableFileStream,
                     msg: 'Usuario não existe'
                 })
@@ -103,7 +103,7 @@ export class UserControllers{
             const userExisting = await repo.findOneBy({IdUser: id})
 
             if(!userExisting){
-                return res.status(400).json({
+                return res.status(404).json({
                     status: false,
                     msg: 'Usuario não existe'
                 })
