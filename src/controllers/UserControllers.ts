@@ -1,6 +1,6 @@
 import { User } from "../entities/User";
 import { Request, Response } from "express";
-import { Connection } from "../database/database";
+import { Connection } from "../database/dataBase";
 
 export class UserControllers{
     static async get(req: Request, res: Response){
@@ -45,7 +45,7 @@ export class UserControllers{
         }catch(error: any){
             return res.status(500).json({
                 status: false,
-                msg: 'Erro interno no banco de dados'
+                msg: error
             })
         }
     }

@@ -19,14 +19,11 @@ export const Connection = new DataSource({
 }) 
 
 export async function dbstatus(){
-    try{
-        const status = await Connection.initialize()
-        if(status){
-            console.log('Conectado ao banco de dados')
-        }
-    }catch(error: any){
-        console.log(error)
-    }
+  try {
+    return await Connection.initialize();
+  } catch (error) {
+    console.error('Erro ao conectar ao banco:', error);
+    throw error;
+  }
 }
-
 

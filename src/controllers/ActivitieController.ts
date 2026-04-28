@@ -1,5 +1,5 @@
 import e, { Request, Response } from "express";
-import { Connection } from "../database/database";
+import { Connection } from "../database/dataBase";
 import { Activitie } from "../entities/Activitie";
 import { User } from "../entities/User";
 import { Class } from "../entities/Class";
@@ -140,9 +140,10 @@ export class ActivitieController {
             })
              
         } catch (error) {
+            console.log(error)
             return res.status(500).json({
                 status: false,
-                msg: "ERROR IN BANK CONNECTION"
+                msg: error
             })
         }
     }

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Connection } from "../database/database";
+import { Connection } from "../database/dataBase";
 import { Class } from "../entities/Class";
 
 export class ClassControllers{

@@ -1,18 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, Collection, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Activitie } from "./Activitie";
 
 @Entity('tblClass')
 export class Class{
     @PrimaryGeneratedColumn({type: 'number'})
-    IdClass: number;
+    IdClass!: number;
 
     @Column({type: 'number'})
-    ClassPeriod: number;
+    ClassPeriod!: number;
 
     @Column({type: 'varchar'})
-    ClassCurso: string;
+    ClassCurso!: string;
     
     @OneToMany (() => Activitie, (activitie) => activitie.classe)
-    activities: Activitie[];
+    activities!: Activitie[];
 
 }

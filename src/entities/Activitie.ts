@@ -1,41 +1,40 @@
-import { Entity, PrimaryGeneratedColumn, Column, Collection, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { User } from "./User";
 import { Class  } from "./Class";
-import { VarChar } from "mssql";
 
 @Entity('tblActivities')
 export class Activitie{
     @PrimaryGeneratedColumn({type: 'number'})
-    IdActivities: number;
+    IdActivities!: number;
     
     @Column({type: 'number', nullable: false})
-    IdUser: number;
+    IdUser!: number;
 
     @Column({type: 'number', nullable: false})
-    IdClass: number;
+    IdClass!: number;
 
     @Column({type: 'string', nullable: false})
-    ActivitieType: string;
+    ActivitieType!: string;
 
     @Column({type: 'string', nullable: false})
-    ActivitieTitle: string;
+    ActivitieTitle!: string;
 
     @Column({type: 'string'})
-    ActivitieDescription: string;
+    ActivitieDescription!: string;
 
     @Column({type: 'date', nullable: false})
-    ActivitieDataEnd: Date;
+    ActivitieDataEnd!: Date;
 
     @Column({type: 'date', nullable: false})
-    ActivitieDataCreate: Date;
+    ActivitieDataCreate!: Date;
 
     @Column({type: 'date', nullable: false})
-    CreatedAt: Date;
+    CreatedAt!: Date;
 
     @ManyToOne(() => User, user => user.activities )
-    user: User;
+    user!: User;
 
     @ManyToOne(() => Class, (classe) => classe.activities)
-    classe: Class;
+    classe!: Class;
 
 }
