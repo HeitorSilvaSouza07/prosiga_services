@@ -15,6 +15,9 @@ export class User{
     @Column({ type: 'nvarchar', length: 50 })
     UserType!: string;
 
+    @Column({ type: 'nvarchar', length: 100 })
+    UserPassword!: string;
+
     @OneToMany(() => Activitie, (activitie) => activitie.user)
     activities!: Activitie[];
 }
