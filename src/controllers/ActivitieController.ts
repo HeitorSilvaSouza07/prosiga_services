@@ -149,6 +149,49 @@ export class ActivitieController {
         }
     }
 
+    static async updateDate(req: Request, res: Response){
+        try{
+            const id = Number(req.params.id)
+
+            const {ActivitieDataEnd} = req.body
+
+            const repo = Connection.getRepository(Activitie)
+            const activitie = await repo.findOneBy({IdActivities: id})
+
+            if(!activitie){
+                return res.status(404).json({
+                    status: false,
+                    msg: 'atividade não encontrada'
+                })            
+            }
+
+            const dataAtual = new Date()
+
+            if(ActivitieDataEnd < dataAtual){
+                return res.status(400).json({
+                    status: false,
+                    msg: 'Data final menor que a data atual'
+                })
+            }
+
+            activitie.ActivitieDataEnd = ActivitieDataEnd
+
+            await repo.save(activitie)
+
+            return res.status(200).json({
+                status: true,
+                msg: 'Data de entrega atualizada com sucesso',
+                data: activitie
+            })
+
+        }catch(error){
+            return res.status(500).json({
+                status: false,
+                msg: "ERROR IN BANK CONNECTION"
+            })
+        }
+    }
+
     public static async delete(req: Request, res: Response) {
         try {
             const id = Number(req.params.id)
