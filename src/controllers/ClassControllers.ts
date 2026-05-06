@@ -3,7 +3,7 @@ import { Connection } from "../database/dataBase";
 import { Class } from "../entities/Class";
 
 export class ClassControllers{
-    public static async get(req: Request, res: Response){
+    static async get(req: Request, res: Response){
         try{
             const id = Number(req.params.id)
 
@@ -32,7 +32,7 @@ export class ClassControllers{
         }
     }
 
-    public static async listClass(req: Request, res: Response){
+    static async listClass(req: Request, res: Response){
         try{
             const repo = await Connection.getRepository(Class)
 
@@ -51,7 +51,7 @@ export class ClassControllers{
         }
     }
 
-    public static async createClass(req: Request, res: Response){
+    static async createClass(req: Request, res: Response){
         try{
 
             const {ClassPeriod, ClassCurso} = req.body
@@ -85,7 +85,7 @@ export class ClassControllers{
         }
     }
 
-    public static async updateClass(req: Request, res: Response){
+    static async updateClass(req: Request, res: Response){
         try{
             const id = Number(req.params.id)
             
@@ -130,7 +130,7 @@ export class ClassControllers{
         }
     }
 
-    public static async deleteClass(req: Request, res: Response){
+    static async deleteClass(req: Request, res: Response){
             try{
                 const IdClass = Number(req.params.id)
                 
