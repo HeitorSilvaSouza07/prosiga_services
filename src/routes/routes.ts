@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { ActivitieController } from "../controllers/ActivitieController";
-import { ClassControllers } from "../controllers/ClassControllers";
-import { UserControllers } from "../controllers/UserControllers";
+import { ActivitieController } from "../controllers/administrator/ActivitieController";
+import { ClassControllers } from "../controllers/administrator/ClassControllers";
+import { UserControllers } from "../controllers/administrator/UserControllers";
 
 const router = Router();
 

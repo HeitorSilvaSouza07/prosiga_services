@@ -1,19 +1,19 @@
-import { User } from "../entities/User";
+import { User } from "../../entities/User";
 import { Request, Response } from "express";
-import { Connection } from "../database/dataBase";
+import { Connection } from "../../database/dataBase";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-export class UserControllers{
-    static async get(req: Request, res: Response){
-        try{
+export class UserControllers {
+    static async get(req: Request, res: Response) {
+        try {
             const id = Number(req.params.id);
 
             const repo = Connection.getRepository(User);
 
-            const user = await repo.findOneBy({IdUser: id});
+            const user = await repo.findOneBy({ IdUser: id });
 
-            if(!user){
+            if (!user) {
                 return res.status(404).json({
                     status: false,
                     msg: 'Usuario não existe'
@@ -25,7 +25,7 @@ export class UserControllers{
                 data: user
             })
 
-        }catch(error : any){
+        } catch (error: any) {
             return res.status(500).json({
                 status: false,
                 msg: 'Erro interno no banco de dados'
@@ -33,8 +33,8 @@ export class UserControllers{
         }
     }
 
-    static async listUsers(req: Request, res: Response){
-        try{
+    static async listUsers(req: Request, res: Response) {
+        try {
             const repo = Connection.getRepository(User);
 
             const users = await repo.find()
@@ -44,7 +44,7 @@ export class UserControllers{
                 data: users
             })
 
-        }catch(error: any){
+        } catch (error: any) {
             return res.status(500).json({
                 status: false,
                 msg: error
@@ -52,11 +52,11 @@ export class UserControllers{
         }
     }
 
-    static async createUser(req: Request, res: Response){
-        try{
-            const {UserName, UserCpf, UserType, UserPassword} = req.body
+    static async createUser(req: Request, res: Response) {
+        try {
+            const { UserName, UserCpf, UserType, UserPassword } = req.body
 
-            if(!UserName || !UserCpf || !UserType || !UserPassword){
+            if (!UserName || !UserCpf || !UserType || !UserPassword) {
                 return res.status(400).json({
                     status: false,
                     msg: 'Preencha todos os campos'
@@ -65,7 +65,7 @@ export class UserControllers{
 
             const lengthCpf = UserCpf.length
 
-            if (lengthCpf > 11 || lengthCpf < 11){
+            if (lengthCpf > 11 || lengthCpf < 11) {
                 return res.status(400).json({
                     status: false,
                     msg: 'Cpf deve conter 11 caracteres'
@@ -91,7 +91,7 @@ export class UserControllers{
             })
 
 
-        }catch(error: any){
+        } catch (error: any) {
             return res.status(500).json({
                 status: false,
                 msg: 'Erro interno no banco de dados'
@@ -99,29 +99,29 @@ export class UserControllers{
         }
     }
 
-    static async deleteUser(req: Request, res: Response){
-        try{
+    static async deleteUser(req: Request, res: Response) {
+        try {
             const id = Number(req.params.id)
 
             const repo = Connection.getRepository(User);
 
-            const userExisting = await repo.findOneBy({IdUser: id})
+            const userExisting = await repo.findOneBy({ IdUser: id })
 
-            if(!userExisting){
+            if (!userExisting) {
                 return res.status(404).json({
                     status: false,
                     msg: 'Usuario não existe'
                 })
             }
 
-            await repo.delete({IdUser: id})
+            await repo.delete({ IdUser: id })
 
             return res.status(200).json({
                 status: true,
                 msg: 'Usuario deletado com sucesso'
             })
-              
-        }catch(error: any){
+
+        } catch (error: any) {
             return res.status(500).json({
                 status: false,
                 msg: 'Erro interno no banco de dados'
@@ -129,21 +129,21 @@ export class UserControllers{
         }
     }
 
-    static async loginUser(req: Request, res: Response){
-        try{
-            const {UserCpf, UserPassword} = req.body
+    static async loginUser(req: Request, res: Response) {
+        try {
+            const { UserCpf, UserPassword } = req.body
 
-            if(!UserCpf || !UserPassword){
+            if (!UserCpf || !UserPassword) {
                 return res.status(400).json({
-                    status: false, 
+                    status: false,
                     msg: 'Preencha todos os campos'
                 })
             }
 
             const repo = Connection.getRepository(User);
-            const userExisting = await repo.findOneBy({UserCpf: String(UserCpf)})
+            const userExisting = await repo.findOneBy({ UserCpf: String(UserCpf) })
 
-            if(!userExisting){
+            if (!userExisting) {
                 return res.status(404).json({
                     status: false,
                     msg: 'Usuario não existe'
@@ -152,7 +152,7 @@ export class UserControllers{
 
             const passwordMatch = await bcrypt.compare(String(UserPassword), userExisting.UserPassword);
 
-            if(!passwordMatch){
+            if (!passwordMatch) {
                 return res.status(401).json({
                     status: false,
                     msg: 'Senha incorreta'
@@ -172,7 +172,7 @@ export class UserControllers{
                 }
             })
 
-        }catch(error: any){
+        } catch (error: any) {
             return res.status(500).json({
                 status: false,
                 msg: 'Erro interno no banco de dados'
