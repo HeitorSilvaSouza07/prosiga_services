@@ -12,7 +12,6 @@
   "dependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/jsonwebtoken": "^9.0.10",
-    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
@@ -29,6 +28,7 @@
     "@types/express": "^5.0.6",
     "@types/mssql": "^9.1.11",
     "@types/node": "^20.19.39",
+    "bcrypt": "^6.0.0",
     "eslint": "^9.39.4",
     "jest": "^30.3.0",
     "tailwindcss": "^4",

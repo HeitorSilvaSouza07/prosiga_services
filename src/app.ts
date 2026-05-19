@@ -4,7 +4,7 @@ import "reflect-metadata";
 import express from 'express';
 import cors from 'cors';
 import { dbstatus } from './database/dataBase';
-import router from './routes/routes';
+import router from './routes/admin';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
