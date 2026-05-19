@@ -1,13 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { User } from "./User"; 
 
-Entity('tblSubject')
+Entity('tblSuject')
 export class Subject{
 
     @PrimaryGeneratedColumn()
     IdSub!: number
 
-    @Column({type: 'varchar', length: 30})
+    @Column({type: 'nvarchar', length: 100})
     SubName!: string
     
     @ManyToOne(() => User, (user) => user.IdSub)

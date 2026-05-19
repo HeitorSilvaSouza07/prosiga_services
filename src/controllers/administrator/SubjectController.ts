@@ -76,7 +76,8 @@ export class SubjectController{
         }catch(error: any){
             return res.status(500).json({
                 status: false,
-                msg: 'Erro inteiro'
+                msg: 'Erro inteiro', 
+                error: error.message
             })
         }
     }

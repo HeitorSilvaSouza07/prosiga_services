@@ -1,4 +1,4 @@
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { Connection } from "../../database/dataBase";
 import { Activitie } from "../../entities/Activitie";
 import { User } from "../../entities/User";
