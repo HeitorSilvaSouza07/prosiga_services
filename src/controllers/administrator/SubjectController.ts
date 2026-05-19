@@ -20,14 +20,15 @@ export class SubjectController{
             }
 
             return res.status(200).json({
-                status: false,
-                msg: 'Materia encontrada com sucesso'
+                status: true,
+                msg: 'Materia encontrada com sucesso',
+                data: subject
             })
 
         }catch(error: any){
             return res.status(500).json({
                 status: false,
-                msg: 'ERROR IN BANK CONNECTION'
+                msg: 'ERROR IN BANK CONNECTION',
             })
         }
     }
@@ -44,9 +45,9 @@ export class SubjectController{
                 })
             }
 
-            const name = SubName.trim;
+            const name = SubName;
 
-            if(name <= 0){
+            if(name.length <= 0){
                 return res.status(400).json({
                     status: false,
                     msg: 'Preencha todos os campos'
@@ -76,8 +77,7 @@ export class SubjectController{
         }catch(error: any){
             return res.status(500).json({
                 status: false,
-                msg: 'Erro inteiro', 
-                error: error.message
+                msg: 'Erro inteiro',
             })
         }
     }
@@ -98,7 +98,7 @@ export class SubjectController{
         }catch(error: any){
             return res.status(500).json({
                 status: false,
-                msg: 'Erro interno'
+                msg: 'Erro interno',
             })
         }
     }}

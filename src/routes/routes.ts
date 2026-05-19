@@ -23,7 +23,7 @@ router.post("/users", UserControllers.createUser);
 router.post("/login", UserControllers.loginUser);
 
 //subjects
-router.get("/subject", SubjectController.get);
+router.get("/subject/:id", SubjectController.get);
 router.post("/subject", SubjectController.create);
 
 export default router;
