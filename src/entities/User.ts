@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Activitie } from "./Activitie";
+import { Class } from "./Class";
 
 @Entity('tblUser')
 export class User{
@@ -23,7 +24,10 @@ export class User{
 
     @Column({ type: 'int', nullable: true })
     IdSub!: number;
+    
+    @OneToMany(() => Class, (classe) => classe.IdUser)
+    classes!: Class[];
 
-    @OneToMany(() => Activitie, (activitie) => activitie.user)
+    @OneToMany(() => Activitie, (activitie) => activitie.IdUser)
     activities!: Activitie[];
 }

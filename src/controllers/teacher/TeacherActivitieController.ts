@@ -7,8 +7,26 @@
  export class TeacherActivitieController{
     static async createActivitie(req: Request, res: Response){
 
+      const idUser = req.userId;
+
+      const { IdClass, ActivitieType, ActivitieTitle, 
+         ActivitieDescription, ActivitieDataEnd
+       } = req.body;
+
+      const connection = Connection.getRepository(User);
+
+      if( !IdClass || !ActivitieType || !ActivitieTitle || 
+         !ActivitieDescription || !ActivitieDataEnd){
+            return res.status(400).json({status: false, msg: 'Todos os campos devem estar preenchidos'})
+         }
+
+      const user = await connection.findOne({where: {IdUser: idUser}});
         
-        
+      if(!user){
+         return res.status(404).json({status: false, msg: 'Usuário não encontrado'})
+      }
+
+      
     }
 
     static async updateActivitie(req: Request, res: Response){
