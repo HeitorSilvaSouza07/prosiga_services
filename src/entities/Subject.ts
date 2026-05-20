@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { User } from "./User"; 
 
-@Entity('tblSuject')
+@Entity('tblSubject')
 export class Subject{
 
     @PrimaryGeneratedColumn()

@@ -7,7 +7,7 @@
  export class TeacherActivitieController{
     static async createActivitie(req: Request, res: Response){
 
-      const idUser = req.userId;
+      const idUser = res.locals.userId; //arrumar depois
 
       const { IdClass, ActivitieType, ActivitieTitle, 
          ActivitieDescription, ActivitieDataEnd
