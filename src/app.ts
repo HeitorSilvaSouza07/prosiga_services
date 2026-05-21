@@ -4,7 +4,8 @@ import "reflect-metadata";
 import express from 'express';
 import cors from 'cors';
 import { dbstatus } from './database/dataBase';
-import router from './routes/admin';
+import adminRouter from './routes/admin';
+import authRouter from './routes/auth';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -13,8 +14,11 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());  // Permite requisições de outros domínios
 app.use(express.json());  // Parseia JSON no body das requisições
 
-// Conecta as rotas definidas em routes.ts
-app.use('/api', router);
+// Rotas de autenticação
+app.use('/api/auth', authRouter);
+
+// Rotas administrativas protegidas
+app.use('/api', adminRouter);
 
 // Inicializa o banco e o servidor
 dbstatus().then(() => {

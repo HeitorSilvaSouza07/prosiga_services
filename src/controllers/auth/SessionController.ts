@@ -18,16 +18,16 @@ export class SessionController{
             }
 
             const repo = Connection.getRepository(User);
-            const userExisting = await repo.findOneBy({ UserCpf: String(UserCpf) })
+            const user = await repo.findOneBy({ UserCpf: String(UserCpf) })
 
-            if (!userExisting) {
+            if (!user) {
                 return res.status(404).json({
                     status: false,
                     msg: 'Usuario não existe'
                 })
             }
 
-            const passwordMatch = await bcrypt.compare(String(UserPassword), userExisting.UserPassword);
+            const passwordMatch = await bcrypt.compare(String(UserPassword), user.UserPassword);
 
             if (!passwordMatch) {
                 return res.status(401).json({
@@ -36,18 +36,27 @@ export class SessionController{
                 })
             }
 
-            const token = jwt.sign({ id: userExisting?.IdUser }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' })
+            const token = jwt.sign(
+                {
+                    id: user.IdUser,
+                    role: user.UserType,
+                    useAdmin: user.UseAdmin
+                },
+                process.env.JWT_SECRET || 'secret',
+                { expiresIn: '1h' }
+            )
 
             return res.status(200).json({
                 status: true,
                 token: token,
                 data: {
-                    id: userExisting.IdUser,
-                    name: userExisting.UserName,
-                    cpf: userExisting.UserCpf,
-                    type: userExisting.UserType
+                    id: user.IdUser,
+                    name: user.UserName,
+                    cpf: user.UserCpf,
+                    type: user.UserType
                 }
             })
+
 
         } catch (error: any) {
             return res.status(500).json({

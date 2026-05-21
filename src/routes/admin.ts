@@ -4,8 +4,10 @@ import { ClassControllers } from "../controllers/administrator/ClassControllers"
 import { UserControllers } from "../controllers/administrator/UserControllers";
 import { SubjectController } from "../controllers/administrator/SubjectController";
 import { PermissionController } from "../controllers/administrator/PermissionController";
+import { AuthUser } from "../middlewers/userAuth";
 
 const router = Router();
+router.use(AuthUser.auth());
 
 // Atividades
 router.get("/activities/:id", ActivitieController.get);
