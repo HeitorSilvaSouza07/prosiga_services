@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UserPermission } from "../../entities/UserPermission";
+import { User } from "../../entities/User";
 import { Connection } from "../../database/dataBase";
 export class AdministratorUserPermissionController{
     static async get(req: Request, res: Response){
@@ -36,6 +37,15 @@ export class AdministratorUserPermissionController{
         try{
 
             const id = Number(req.params.id);
+
+            const user = await Connection.getRepository(User).findOneBy({ IdUser: id });
+
+            if(!user){
+                return res.status(404).json({
+                    status: false,
+                    msg: 'Usuario não encontrado'
+                })
+            }
 
             const repo = Connection.getRepository(UserPermission);
 
