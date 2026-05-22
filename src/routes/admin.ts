@@ -1,39 +1,38 @@
 import { Router } from "express";
-import { ActivitieController } from "../controllers/administrator/AdministratorActivitieController";
-import { ClassControllers } from "../controllers/administrator/AdministratorClassControllers";
-import { UserControllers } from "../controllers/administrator/AdministratorUserControllers";
-import { SubjectController } from "../controllers/administrator/AdmnistratorSubjectController";
-import { PermissionController } from "../controllers/administrator/AdministratorPermissionController";
+import { AdministratorActivitieController } from "../controllers/administrator/AdministratorActivitieController";
+import { AdministratorClassControllers } from "../controllers/administrator/AdministratorClassControllers";
+import { AdministratorUserControllers } from "../controllers/administrator/AdministratorUserControllers";
+import { AdministratorSubjectController } from "../controllers/administrator/AdmnistratorSubjectController";
+import { AdministratorPermissionController } from "../controllers/administrator/AdministratorPermissionController";
 import { AuthUser } from "../middlewers/userAuth";
-import { UserPermissionController } from "../controllers/administrator/AdministratorUserPermission";
+import { AdministratorUserPermissionController } from "../controllers/administrator/AdministratorUserPermission";
 
 const router = Router();
 
 // Atividades
-router.get("/activities/:id", ActivitieController.get);
-router.get("/activities", ActivitieController.listActivities);
-router.post("/activities", ActivitieController.create);
-router.delete("/activities/:id", ActivitieController.delete);
+router.get("/activities/:id", AdministratorActivitieController.get);
+router.get("/activities", AdministratorActivitieController.listActivities);
+router.post("/activities", AdministratorActivitieController.create);
+router.delete("/activities/:id", AdministratorActivitieController.delete);
 
 // Classes
-router.get("/classes/:id", ClassControllers.get);
-router.get("/classes", ClassControllers.listClass);
+router.get("/classes/:id", AdministratorClassControllers.get);
+router.get("/classes", AdministratorClassControllers.listClass);
 
 //user
-router.get("/users/:id", UserControllers.get);
-router.get("/users", UserControllers.listUsers);
-router.post("/users", UserControllers.createUser);
+router.get("/users/:id", AdministratorUserControllers.get);
+router.get("/users", AdministratorUserControllers.listUsers);
+router.post("/users", AdministratorUserControllers.create);
 
 //subjects
-router.get("/subject/:id", SubjectController.get);
-router.post("/subject", SubjectController.create);
+router.get("/subject/:id", AdministratorSubjectController.get);
+router.post("/subject", AdministratorSubjectController.create);
 
 //permissions
-router.post('/permission', PermissionController.create);
-router.get('/permission/:id', PermissionController.get);
+router.get('/permissions', AdministratorPermissionController.list)
 
 //user permission 
-router.get('/userPermission/:id', UserPermissionController.listByUser);
-router.get('/userPermission/:id', UserPermissionController.get);
+router.get('/userPermission/:id', AdministratorUserPermissionController.listByUser);
+router.get('/userPermission/:id', AdministratorUserPermissionController.get);
 
 export default router;
