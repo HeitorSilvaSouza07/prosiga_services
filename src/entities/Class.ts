@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
 import { Activitie } from "./Activitie";
+import { User } from "./User";
 
 @Entity('tblClass')
 export class Class{
@@ -17,5 +18,8 @@ export class Class{
 
     @OneToMany (() => Activitie, (activitie) => activitie.classe)
     activities!: Activitie[];
+
+    @ManyToOne(() => User, (user) => user.classes)
+    user!: User;
 
 }

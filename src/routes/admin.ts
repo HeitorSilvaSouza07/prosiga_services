@@ -7,7 +7,6 @@ import { PermissionController } from "../controllers/administrator/PermissionCon
 import { AuthUser } from "../middlewers/userAuth";
 
 const router = Router();
-router.use(AuthUser.auth());
 
 // Atividades
 router.get("/activities/:id", ActivitieController.get);

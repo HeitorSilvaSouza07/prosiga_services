@@ -1,15 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { User } from "./User"; 
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity('tblSubject')
 export class Subject{
 
     @PrimaryGeneratedColumn()
-    IdSub!: number
+    IdSub!: number;
 
     @Column({type: 'nvarchar', length: 100})
-    SubName!: string
-    
-    @ManyToOne(() => User, (user) => user.IdSub)
-    users!: User[];
+    SubName!: string;
 }

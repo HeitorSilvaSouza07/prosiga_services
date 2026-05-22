@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Activitie } from "./Activitie";
 import { Class } from "./Class";
+import { Submit } from "./Submit";
+import { UserPermission } from "./UserPermission";
 
 @Entity('tblUser')
 export class User{
@@ -25,9 +27,15 @@ export class User{
     @Column({ type: 'int', nullable: true })
     IdSub!: number;
     
-    @OneToMany(() => Class, (classe) => classe.IdUser)
+    @OneToMany(() => Class, (classe) => classe.user)
     classes!: Class[];
 
-    @OneToMany(() => Activitie, (activitie) => activitie.IdUser)
+    @OneToMany(() => Activitie, (activitie) => activitie.user)
     activities!: Activitie[];
+
+    @OneToMany(() => Submit, (submit) => submit.user)
+    submits!: Submit[];
+
+    @OneToMany(() => UserPermission, (userPermission) => userPermission.user)
+    userPermissions!: UserPermission[];
 }

@@ -11,16 +11,16 @@ export class Submit{
     @Column({type: 'int'})
     IdActivities!: number;
 
-    @Column({type: 'nvarchar'})
-    IdUser! : string;
+    @Column({type: 'int'})
+    IdUser! : number;
 
-    @Column({type: 'nvarchar', length: 255})
-    SubSentId!: string;
+    @Column({type: 'date'})
+    SubSenteAt!: Date;
 
-    @ManyToOne(() => User, (user) => user.IdUser)
+    @ManyToOne(() => User, (user) => user.submits)
     user!: User;
 
-    @ManyToOne(() => Activitie, (activitie) => activitie.IdActivities)
-    activities!: Activitie[];
+    @ManyToOne(() => Activitie, (activitie) => activitie.submits)
+    activities!: Activitie;
 
 }

@@ -1,4 +1,5 @@
-import { Column, PrimaryGeneratedColumn, Entity } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from "typeorm";
+import { UserPermission } from "./UserPermission";
 
 @Entity('tblPermissios')
 export class Permission{
@@ -7,9 +8,11 @@ export class Permission{
     IdPer!: number;
 
     @Column({type: 'nvarchar', length: 255})
-    PerKey!: number;
+    PerKey!: string;
 
     @Column({type: 'nvarchar', length: 1500})
-    PerDesc!: string
+    PerDesc!: string;
 
+    @OneToMany(() => UserPermission, (userPermission) => userPermission.permission)
+    userPermissions!: UserPermission[];
 }

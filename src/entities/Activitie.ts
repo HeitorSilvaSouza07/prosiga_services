@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
 import { User } from "./User";
-import { Class  } from "./Class";
+import { Class } from "./Class";
+import { Submit } from "./Submit";
 
 @Entity('tblActivities')
 export class Activitie{
@@ -31,10 +32,13 @@ export class Activitie{
     @Column({ type: 'datetime', nullable: false })
     CreatedAt!: Date;
 
-    @ManyToOne(() => User, user => user.activities )
+    @ManyToOne(() => User, user => user.activities)
     user!: User;
 
     @ManyToOne(() => Class, (classe) => classe.activities)
     classe!: Class;
+
+    @OneToMany(() => Submit, (submit) => submit.activities)
+    submits!: Submit[];
 
 }

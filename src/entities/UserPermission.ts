@@ -12,11 +12,11 @@ export class UserPermission{
     IdUser!: number;
 
     @Column({type: 'int'})
-    IdPermission!: number;
+    IdPer!: number;
 
-    @ManyToOne(() => User, (user)=> user.IdUser)
+    @ManyToOne(() => User, (user) => user.userPermissions)
     user!: User;
 
-    @ManyToOne(() => Permission, (permission) => permission.IdPer)
+    @ManyToOne(() => Permission, (permission) => permission.userPermissions)
     permission!: Permission;
 }
