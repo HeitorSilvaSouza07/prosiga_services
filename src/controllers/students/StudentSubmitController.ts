@@ -53,4 +53,50 @@ export class StudentSubmitController{
             })
         }
     }
+
+    static async listSubmitByUser(req: Request, res: Response){
+        try{
+
+            const id = Number(req.params.id);
+
+            if(!id){
+                return res.status(400).json({
+                    status: false,
+                    msg: 'Id do usuario deve ser informado'
+                })
+            }
+
+            const user = await Connection.getRepository(User).findOneBy({ IdUser: id });
+
+            if(!user){
+                return res.status(404).json({
+                    status: false,
+                    msg: 'Usuario não encontrado'
+                })
+            }
+
+            const repo = Connection.getRepository(Submit);
+
+            const submits = await repo.findBy({ IdUser: id})
+
+            if(!submits){
+                return res.status(404).json({
+                    status: false,
+                    msg: 'Nenhuma atividade enviada por este usuario'
+                })
+            }
+
+            return res.status(200).json({
+                status: true,
+                msg: 'Atividades encontradas',
+                data: submits 
+            })
+
+        }catch(error: any){
+            return res.status(500).json({
+                status: false,
+                msg: 'Erro interno'
+            })
+        }
+    }
 }
