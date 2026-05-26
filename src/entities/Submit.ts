@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
 import { User } from "./User";
 import { Activitie } from "./Activitie";
 
@@ -18,9 +18,11 @@ export class Submit{
     SubSenteAt!: Date;
 
     @ManyToOne(() => User, (user) => user.submits)
+    @JoinColumn({ name: 'IdUser' })
     user!: User;
 
     @ManyToOne(() => Activitie, (activitie) => activitie.submits)
+    @JoinColumn({ name: 'IdActivities' })
     activities!: Activitie;
 
 }

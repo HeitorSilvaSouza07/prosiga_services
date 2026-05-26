@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from "typeorm";
 import { User } from "./User";
 import { Class } from "./Class";
 import { Submit } from "./Submit";
@@ -32,13 +32,15 @@ export class Activitie{
     @Column({ type: 'datetime', nullable: false })
     CreatedAt!: Date;
 
-    @ManyToOne(() => User, user => user.IdUser)
+    @ManyToOne(() => User, user => user.activities)
+    @JoinColumn({ name: 'IdUser' })
     user!: User;
 
-    @ManyToOne(() => Class, (classe) => classe.IdClass)
+    @ManyToOne(() => Class, (classe) => classe.activities)
+    @JoinColumn({ name: 'IdClass' })
     classe!: Class;
 
-    @OneToMany(() => Submit, (submit) => submit.IdSubmit)
+    @OneToMany(() => Submit, (submit) => submit.activities)
     submits!: Submit[];
 
 }

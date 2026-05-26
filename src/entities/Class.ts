@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from "typeorm";
 import { Activitie } from "./Activitie";
 import { User } from "./User";
 
@@ -13,13 +13,14 @@ export class Class{
     @Column({ type: 'nvarchar', length: 255 })
     ClassCurso!: string;
 
-    @Column({type: 'nvarchar', length: 255})
-    IdUser!: string;     
+    @Column({type: 'int'})
+    IdUser!: number;     
 
     @OneToMany (() => Activitie, (activitie) => activitie.classe)
     activities!: Activitie[];
 
     @ManyToOne(() => User, (user) => user.classes)
+    @JoinColumn({ name: 'IdUser' })
     user!: User;
 
 }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { User } from "./User";
 import { Subject } from "./Subject";
 
@@ -15,9 +15,11 @@ export class UserSubject{
     IdSub!: number;
 
     @ManyToOne(() => User, (user) => user.userSubjects)
+    @JoinColumn({ name: 'IdUser' })
     user!: User;
 
     @ManyToOne(() => Subject, (subject) => subject.userSubjects)
+    @JoinColumn({ name: 'IdSub' })
     subject!: Subject;
 
 }
