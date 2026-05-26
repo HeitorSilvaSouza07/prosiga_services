@@ -5,11 +5,11 @@ import { AdministratorUserControllers } from "../controllers/administrator/Admin
 import { AdministratorSubjectController } from "../controllers/administrator/AdmnistratorSubjectController";
 import { AdministratorPermissionController } from "../controllers/administrator/AdministratorPermissionController";
 import { AdministratorUserPermissionController } from "../controllers/administrator/AdministratorUserPermission";
-import { AuthUser } from "../middlewers/userAuth";
+import { AuthUsers } from "../middlewers/auth";
 
 const router = Router();
 
-router.use(AuthUser.auth);
+router.use(AuthUsers.auth, AuthUsers.authAdmin);
 
 // Atividades
 router.get("/activities/:id", AdministratorActivitieController.get);
@@ -38,7 +38,6 @@ router.post('/permissions', AdministratorPermissionController.create)
 router.get('/userPermission/:id', AdministratorUserPermissionController.listByUser);
 router.get('/userPermission/:id', AdministratorUserPermissionController.get);
 router.post('/userpermissions', AdministratorUserPermissionController.create);
-router.delete('/userpermissions/:1', AdministratorUserPermissionController.create)
+router.delete('/userpermissions/:id', AdministratorUserPermissionController.delete);
 
 export default router;
-    

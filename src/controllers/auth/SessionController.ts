@@ -48,13 +48,7 @@ export class SessionController{
 
             return res.status(200).json({
                 status: true,
-                token: token,
-                data: {
-                    id: user.IdUser,
-                    name: user.UserName,
-                    cpf: user.UserCpf,
-                    type: user.UserType
-                }
+                token: token
             })
 
 

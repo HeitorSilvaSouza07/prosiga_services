@@ -4,7 +4,7 @@ import "reflect-metadata";
 import express from 'express';
 import cors from 'cors';
 import { dbstatus } from './database/dataBase';
-import adminRouter from './routes/admin';
+import adminRouter from './routes/routes';
 import authRouter from './routes/auth';
 
 const app = express();
