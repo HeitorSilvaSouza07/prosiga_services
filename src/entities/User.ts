@@ -7,7 +7,7 @@ import { UserSubject } from "./UserSubject";
 
 @Entity('tblUser')
 export class User{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({type: 'int'})
     IdUser!: number;
 
     @Column({ type: 'nvarchar', length: 255 })
@@ -25,9 +25,6 @@ export class User{
     @Column({ type: 'bit', default: false })
     UseAdmin!: boolean;
 
-    @Column({ type: 'int', nullable: true })
-    IdSub!: number;
-    
     @OneToMany(() => Class, (classe) => classe.user)
     classes!: Class[];
 
