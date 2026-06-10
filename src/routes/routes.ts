@@ -22,7 +22,7 @@ router.get("/classes/:id", AdministratorClassControllers.get);
 router.get("/classes", AdministratorClassControllers.listClass);
 
 //user
-router.get("/users/:id", AdministratorUserControllers.get);
+router.get("/user/:id", AdministratorUserControllers.get);
 router.get("/users", AdministratorUserControllers.listUsers);
 router.post("/users", AdministratorUserControllers.create);
 
