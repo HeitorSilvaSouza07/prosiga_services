@@ -4,7 +4,7 @@ import "reflect-metadata";
 import express from 'express';
 import cors from 'cors';
 import { dbstatus } from './database/dataBase';
-import adminRouter from './routes/routes';
+import adminRouter from './routes/admin';
 import authRouter from './routes/auth';
 import studentRouter from './routes/student';
 import teacherRouter from './routes/teacher';

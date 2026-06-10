@@ -66,8 +66,8 @@ PORT=3000
 DB_HOST=localhost
 DB_PORT=1433
 DB_USER=sa
-DB_PASS=sua_senha
-DB_NAME=prosiga_db
+DB_PASSWORD=sua_senha
+DB_NAME=ProSigaDb
 
 # Autenticação
 JWT_SECRET=seu_secret_aqui
