@@ -36,6 +36,7 @@ export class AdministratorActivitieController {
 
     static async listActivities(req: Request, res: Response) {
         try {
+            
             const repo = Connection.getRepository(Activitie)
             const activitie = await repo.find()
 
